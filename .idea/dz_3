@@ -1,0 +1,53 @@
+    # Задание №1
+    def revers(self):
+        n = self.start_node
+        count = 0
+        while n is not None:
+            self.insert_start(n.data)
+            n = n.next
+            count += 1
+        for i in range(0, count):
+            self.delete_end()
+
+
+l1 = List_1()
+l1.insert_start(4)
+l1.insert_start(3)
+l1.insert_start(2)
+l1.insert_end(5)
+print('full')
+l1.print_l()
+print('revers')
+l1.revers()
+l1.print_l()
+
+
+   # Задание №2
+    def sort(self):
+        m = self.start_node
+        count = 0
+        while m is not None:
+            n = self.start_node
+            while n is not None:
+                if m.data < n.data:
+                    x = m.data
+                    m.data = n.data
+                    n.data = x
+                    count += 1
+                n = n.next
+            m = m.next
+
+
+
+l2 = List_2()
+l2.insert_start(6)
+l2.insert_start(8)
+l2.insert_start(22)
+l2.insert_start(11)
+l2.insert_end(5)
+l2.insert_end(15)
+print('full')
+l2.print_l()
+print('sort')
+l2.sort()
+l2.print_l()
