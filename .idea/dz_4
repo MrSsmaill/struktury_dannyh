@@ -1,0 +1,102 @@
+import enum
+
+
+class Color(enum.auto):
+    RED = 'red'
+    BLACK = 'black'
+
+
+class Node:
+    def __init__(self):
+        self.value = None
+        self.color = Color
+        self.left_child = None
+        self.right_child = None
+
+    def add(self, value):
+        if self.value != None:
+            result = self.add_node(value)
+            self = self.rebalsns()
+            self.color = Color.BLACK
+            return result
+        else:
+            self.color = Color.BLACK
+            self.value = value
+            return True
+
+    def add_node(self, value):
+        if self.value == value:
+            return False
+        else:
+            if self.value > value:
+                if self.left_child != None:
+                    result = self.left_child.add_node(value)
+                    self.left_child = self.left_child.rebalsns()
+                    return result
+                else:
+                    self.left_child = Node()
+                    self.left_child.color = Color.RED
+                    self.left_child.value = value
+                    return True
+            else:
+                if self.right_child != None:
+                    result = self.right_child.add_node(value)
+                    self.right_child = self.right_child.rebalsns()
+                    return result
+                else:
+                    self.right_child = Node()
+                    self.right_child.color = Color.RED
+                    self.right_child.value = value
+                    return True
+
+    def color_swap(self):
+        self.right_child.color = Color.BLACK
+        self.left_child.color = Color.BLACK
+        self.color = Color.RED
+
+    def right_swap(self):
+        right_child = self.right_child
+        between_child = right_child.left_child
+        right_child.left_child = self
+        self.right_child = between_child
+        right_child.color = self.color
+        self.color = Color.RED
+        return right_child
+
+    def left_swap(self):
+        left_child = self.left_child
+        between_child = left_child.right_child
+        left_child.right_child = self
+        self.left_child = between_child
+        left_child.color = self.color
+        self.color = Color.RED
+        return left_child
+
+
+    def rebalsns(self):
+        result = self
+        need_relance = True
+        while need_relance:
+            need_relance = False
+            if result.right_child != None and result.right_child.color == Color.RED and (result.left_child == None or result.left_child.color == Color.BLACK):
+                need_relance = True
+                result.right_swap()
+            if result.left_child != None and result.left_child.color == Color.RED and result.left_child.left_child != None and result.left_child.left_child.color == Color.RED:
+                need_relance = True
+                result.left_swap()
+            if result.left_child != None and result.left_child.color == Color.RED and result.right_child != None and result.right_child.color == Color.RED:
+                need_relance = True
+                result.color_swap()
+        return result
+
+
+tree = Node()
+tree.add(5)
+tree.add(6)
+tree.add(10)
+tree.add(1)
+tree.add(8)
+tree.add(7)
+tree.add(2)
+tree.add(3)
+ 
